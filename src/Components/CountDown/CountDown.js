@@ -1,54 +1,54 @@
-import React, { useState ,useEffect} from "react";
-import { View, StyleSheet, Text, Platform } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, Text } from "react-native";
 
 const minutesToMills = (min) => min * 1000 * 60;
 
-const formatTime = (time) => time < 10 ? `0${time}` : time
+const formatTime = (time) => (time < 10 ? `0${time}` : time);
 
-let count = 0
+let count = 0;
 const CountDown = (props) => {
-  const { minutes = 20, isPaused,onProgress } = props;
-  const [millis, setMillis] = useState(minutesToMills(minutes));
+  const { minutes = 20, isPaused, onProgress, onEnd } = props;
+  const [millis, setMillis] = useState(null);
   const minute = Math.floor(millis / 1000 / 60) % 60;
   const seconds = Math.floor(millis / 1000) % 60;
 
-  const interval = React.useRef(null)
-
-
-  useEffect(() => {
-    console.log("count",count++)
-    setMillis(minutesToMills(minutes))
-  },[minutes])
+  const interval = React.useRef(null);
 
   useEffect(() => {
-    if(isPaused) {
-      if(interval.current) clearInterval(interval.current)
+    setMillis(minutesToMills(minutes));
+  }, [minutes]);
+
+  useEffect(() => {
+    if (isPaused) {
+      if (interval.current) clearInterval(interval.current);
       return;
     }
-    interval.current = setInterval(countDown,1000)
+    interval.current = setInterval(countDown, 1000);
 
-    return () => clearInterval(interval.current)
-  },[isPaused])
-
+    return () => clearInterval(interval.current);
+  }, [isPaused]);
 
   const countDown = () => {
     setMillis((time) => {
-      if(time === 0) {
+      if (time === 0) {
         // do more stuff
-        return time
+        clearInterval(interval.current);
+        onEnd();
+        return time;
       }
-    })
-      const timeLeft = time-1000 // 1 second
+      const timeLeft = time - 1000; // 1 second
       // report the progress
-      const pg = timeLeft / minutesToMills(minutes)
-      onProgress(pg)
-      return timeLeft
-  }
-  
+      const pg = timeLeft / minutesToMills(minutes);
+      onProgress(pg);
+      return timeLeft;
+    });
+  };
 
   return (
     <View>
-      <Text style={styles.text}>{formatTime(minute)}:{formatTime(seconds)}</Text>
+      <Text style={styles.text}>
+        {formatTime(minute)}:{formatTime(seconds)}
+      </Text>
     </View>
   );
 };

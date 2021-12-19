@@ -18,18 +18,18 @@ const Timing = (props) => {
       <View style={styles.timingButton}>
         <RoundedButton
           size={50}
-          title={10}
+          title={8}
           onPress={() => {
-            onChangeTime(10);
+            onChangeTime(8);
           }}
         />
       </View>
       <View style={styles.timingButton}>
         <RoundedButton
           size={50}
-          title={10}
+          title={5}
           onPress={() => {
-            onChangeTime(10);
+            onChangeTime(5);
           }}
         />
       </View>

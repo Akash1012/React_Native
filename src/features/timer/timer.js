@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { ProgressBar } from "react-native-paper";
+import { useKeepAwake } from "expo-keep-awake";
 import CountDown from "../../Components/CountDown/CountDown";
 import RoundedButton from "../../Components/RoundedButton";
-import { View, StyleSheet, Text, Platform } from "react-native";
-import Timing from './timing'
+import { View, StyleSheet, Text, Platform, Vibration } from "react-native";
+import Timing from "./timing";
 
 const Timer = (props) => {
+  useKeepAwake();
   const { focusSubject } = props;
   const [isStarted, setIsStarted] = useState(false);
   const [progress, setProgress] = useState(1);
@@ -16,8 +18,26 @@ const Timer = (props) => {
   };
 
   const changeTime = (min) => {
-    console.log('min',min)
     setMinutes(min);
+    setProgress(1);
+    setIsStarted(false);
+  };
+
+  const onEnd = () => {
+    vibrate();
+    setMinutes(1);
+    setProgress(1);
+    setIsStarted(false);
+  };
+
+  const vibrate = () => {
+    if (Platform.OS === "ios") {
+      const interval = setInterval(() => {}, 1000);
+
+      setTimeout(() => clearInterval(interval), 5000);
+    } else {
+      Vibration.vibrate(1000);
+    }
   };
 
   return (
@@ -27,6 +47,7 @@ const Timer = (props) => {
           minutes={minutes}
           isPaused={!isStarted}
           onProgress={onProgress}
+          onEnd={onEnd}
         />
       </View>
       <View style={styles.focus}>
@@ -48,12 +69,12 @@ const Timer = (props) => {
       <View style={styles.buttonWrapper}>
         {isStarted ? (
           <RoundedButton
-          title="Stop"
-          size={50}
-          onPress={() => {
-            setIsStarted(false);
-          }}
-        />
+            title="Stop"
+            size={50}
+            onPress={() => {
+              setIsStarted(false);
+            }}
+          />
         ) : (
           <RoundedButton
             title="Start"
@@ -90,12 +111,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonWrapper: {
-      flex:0.1,
-      padding:15,
-      justifyContent:'center',
-      alignItems:'center',
-      flexDirection:'row'
-  }
+    flex: 0.1,
+    padding: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
 });
 
 export default Timer;

@@ -4,7 +4,7 @@ import Focus from "./src/features/focus/focus";
 import Timer from "./src/features/timer/timer";
 
 const App = () => {
-  const [focusSubject, setFocusSubject] = useState('true');
+  const [focusSubject, setFocusSubject] = useState(false);
   console.log("focusSubject--", focusSubject);
   return (
     <View style={styles.container}>
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "pink",
-    paddingTop: 30
+    paddingTop: 30,
   },
 });
 
