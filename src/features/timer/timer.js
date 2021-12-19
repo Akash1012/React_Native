@@ -8,7 +8,7 @@ import Timing from "./timing";
 
 const Timer = (props) => {
   useKeepAwake();
-  const { focusSubject } = props;
+  const { focusSubject, onTimerEnd } = props;
   const [isStarted, setIsStarted] = useState(false);
   const [progress, setProgress] = useState(1);
   const [minutes, setMinutes] = useState(0.1);
@@ -28,6 +28,7 @@ const Timer = (props) => {
     setMinutes(1);
     setProgress(1);
     setIsStarted(false);
+    onTimerEnd();
   };
 
   const vibrate = () => {

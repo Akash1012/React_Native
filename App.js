@@ -5,11 +5,15 @@ import Timer from "./src/features/timer/timer";
 
 const App = () => {
   const [focusSubject, setFocusSubject] = useState(false);
-  console.log("focusSubject--", focusSubject);
   return (
     <View style={styles.container}>
       {focusSubject ? (
-        <Timer focusSubject={focusSubject} />
+        <Timer
+          focusSubject={focusSubject}
+          onTimerEnd={() => {
+            setFocusSubject(null);
+          }}
+        />
       ) : (
         <Focus addSubject={setFocusSubject} />
       )}
