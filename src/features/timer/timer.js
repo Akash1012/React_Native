@@ -8,7 +8,7 @@ import Timing from "./timing";
 
 const Timer = (props) => {
   useKeepAwake();
-  const { focusSubject, onTimerEnd } = props;
+  const { focusSubject, onTimerEnd, clearSubject } = props;
   const [isStarted, setIsStarted] = useState(false);
   const [progress, setProgress] = useState(1);
   const [minutes, setMinutes] = useState(0.1);
@@ -86,6 +86,16 @@ const Timer = (props) => {
           />
         )}
       </View>
+
+      <View style={styles.clearSubject}>
+        <RoundedButton
+          title="-"
+          size={50}
+          onPress={() => {
+            clearSubject();
+          }}
+        />
+      </View>
     </View>
   );
 };
@@ -117,6 +127,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
+  },
+  clearSubject: {
+    paddingTop: 25,
+    paddingLeft: 25,
   },
 });
 
