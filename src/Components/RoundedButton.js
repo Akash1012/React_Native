@@ -17,15 +17,16 @@ const styles = (size) =>
       width: size,
       height: size,
       alignItems: "center",
+      justifyContent: "center",
       borderColor: "red",
       borderWidth: 2,
     },
     text: {
       color: "#ffff",
-      fontWeight: "bold",
+      //   fontWeight: "bold",
       fontSize: size / 3,
-      paddingTop: 11,
-      paddingLeft: 3,
+      //   paddingTop: 11,
+      //   paddingLeft: 3,
     },
   });
 

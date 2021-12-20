@@ -33,16 +33,22 @@ const CountDown = (props) => {
       if (time === 0) {
         // do more stuff
         clearInterval(interval.current);
-        onEnd();
         return time;
       }
       const timeLeft = time - 1000; // 1 second
       // report the progress
-      const pg = timeLeft / minutesToMills(minutes);
-      onProgress(pg);
       return timeLeft;
     });
   };
+
+  useEffect(() => {
+    const pg = millis / minutesToMills(minutes);
+    onProgress(pg);
+
+    if (millis === 0) {
+      onEnd();
+    }
+  }, [millis]);
 
   return (
     <View>

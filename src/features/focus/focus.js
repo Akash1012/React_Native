@@ -35,7 +35,7 @@ const Focus = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0.5,
   },
   text: {
     borderColor: "green",
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
 
   titleContainer: {
-    flex: 0.5,
+    flex: 1,
     padding: Platform.OS === "android" ? 16 : 50,
     justifyContent: "center",
   },
